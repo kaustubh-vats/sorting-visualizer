@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Visualizer</title>
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <nav id="header" class="helloheader">
+        <div class="logo">Sorting Visualizer</div>
+        <ul class="nav-links">
+            <li class="lis">
+                <div class="algorithms">
+                    <button onclick="showDropDown('algorithms')">Select an Algorithm <i class="fas fa-angle-down"></i></button>
+                    <ul class="invisible-links">
+                        <li onclick="selectthis(this,'algorithms')">Bubble Sort</li>
+                        <li onclick="selectthis(this,'algorithms')">Insertion Sort</li>
+                        <li onclick="selectthis(this,'algorithms')">Selection Sort</li>
+                        <li onclick="selectthis(this,'algorithms')">Quick Sort</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="lis">
+                <div class="array-size">
+                    <button onclick="showDropDown('array-size')">Size of Array <i class="fas fa-angle-down"></i></button>
+                    <ul class="invisible-links">
+                        <li onclick="selectthis(this,'array-size')">5</li>
+                        <li onclick="selectthis(this,'array-size')">10</li>
+                        <li onclick="selectthis(this,'array-size')">20</li>
+                        <li onclick="selectthis(this,'array-size')">30</li>
+                        <li onclick="selectthis(this,'array-size')">65</li>
+                        <li onclick="selectthis(this,'array-size')">100</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="lis">
+                <button id="rand-button">Randomize</button>
+            </li>
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>   
+    </nav>
+    <script type="text/javascript" src="/js/header.js"></script>
+</body>
+</html>

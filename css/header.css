@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+body{
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #252525;
+}
+*{ 
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+nav{
+    width: 100vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 8vh;
+    min-width: 100vw;
+    z-index: 4;
+    background-color: #121212;
+    color: white;
+    position: sticky;
+}
+#header{
+    z-index: 4;
+    width: 100vw;
+}
+.logo{
+    text-transform: uppercase;
+    letter-spacing: 3px; 
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+.nav-links{
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    list-style: none;
+}
+.nav-links a{
+    color: white;
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.burger{
+    cursor: pointer;
+    display: none;
+    z-index: 3;
+}
+.burger div{
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+    border-radius: 50px;
+    transition: all 0.5s ease;
+}
+.algorithms, .array-size{
+    position: relative;
+}
+.algorithms ul, .array-size ul{
+    padding: 0;
+    position: absolute;
+    margin-top: 10px;
+    width: 200px;
+    height: 200px;
+    list-style: none;
+    background-color: #121212;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.fas{
+    margin-left: 10px;
+}
+.nav-links button{
+    width: 200px;
+    background: none;
+    border: none;
+    outline: none;
+    color: #121212;
+    background-color: #E2E8F0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.algorithms li, .array-size li{
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.algorithms li:hover, .array-size li:hover{
+    background-color: #1A94DA;
+}
+.visible-links{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    transform: translateY(0px);
+}
+.invisible-links{
+    display: none;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+}
+#rand-button{
+    width: auto;
+    padding: 10px 20px;
+    color: white;
+    background-color: #1A94DA;
+}
+@media screen and (max-width: 1024px){
+    .nav-links{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 768px){
+    .burger{
+        display: block;
+    }
+    .nav-links{
+        position: fixed;
+        right: 0px;
+        top: 0px;
+        margin: 60px 0px;
+        padding: 10px 20px;
+        z-index: 1;
+        background: #121212;
+        display: block;
+        width: auto;
+        transform: translateX(200%);
+        border-radius: 20px;
+        overflow-x: scroll;
+    }
+    .lis{
+        opacity: 0;
+    }
+    .algorithms ul, .array-size ul{
+        position: sticky;
+    }
+    .nav-links button{
+        margin: 10px 0px;
+    }
+}
+.nav-active{
+    overflow: hidden;
+    transition: transform 0.5s ease-in;
+    transform: translateX(0%);
+}
+.toggle .line1{
+    transform: rotate(-45deg) translate(-5px,6px);
+}
+.toggle .line2{
+    opacity: 0;
+}
+.toggle .line3{
+    transform: rotate(45deg) translate(-5px,-6px); 
+}
+
+@keyframes navLinkFade {
+    from{
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+
