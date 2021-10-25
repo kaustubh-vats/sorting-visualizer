@@ -47,7 +47,7 @@
     flex: 50%;
     margin: 10px;
     color: aliceblue;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .details-div{
     border-radius: 20px;
