@@ -28,7 +28,6 @@ function beginSorting(elem){
         alert('Please Select algorithm to visualize');
         return;
     }
-    alert('This part is currently under development\n ALgorithm: '+algo+"\nArray Size: "+arraySize+"\nSpeed: "+speed+"ms/swap");
     switch(algo){
         case 'Bubble Sort': bubbleSort(elem);
                             break;
@@ -36,6 +35,8 @@ function beginSorting(elem){
                                 break;
         case 'Selection Sort': selectionSort(elem);
                                 break;
+        default : alert('Under Development');
+                 break;
     }
 }
 async function selectionSort(elem){
@@ -75,11 +76,16 @@ async function bubbleSort(elem){
     elem.setAttribute('onclick','');
     let n = arraySize;
     for(let i = 0 ; i < n - 1 ; ++i) {
+        let swapped = true;
         for(let j = 0 ; j < n - i - 1 ; ++j) {
             await clearcompare(n-i,'rgb(201, 201, 201)');
             if(await mycompare(j, j+1)) {
                 await myswap(j, j+1);
+                swapped = false;
             }
+        }
+        if(swapped){
+            break;
         }
         await setSorted(n-1-i,'#75D701');
     }
