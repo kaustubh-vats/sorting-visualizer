@@ -1,6 +1,8 @@
 var speed = 550;
 var randomArray = [];
+var isSorting = false;
 function setArray(){
+    if(isSorting) return;
     var mainDiv = document.querySelector('.main-div');
     randomArray = Array.from({length: arraySize}, () => Math.floor(Math.random() * 500));
     while (mainDiv.firstChild) {
@@ -20,6 +22,7 @@ function changeSpeed(elem){
     document.querySelector('#speed').innerHTML=elem.value;
 }
 function beginSorting(elem){
+    if(isSorting) return;
     if(arraySize == 0){
         alert('Select the array length');
         return;
@@ -35,11 +38,12 @@ function beginSorting(elem){
                                 break;
         case 'Selection Sort': selectionSort(elem);
                                 break;
-        default : alert('Under Development');
+        default : quickSort(elem);
                  break;
     }
 }
 async function selectionSort(elem){
+    isSorting = true;
     elem.setAttribute('onclick','');
     let n = arraySize;
     for (let i = 0; i < n-1; i++)
@@ -58,21 +62,52 @@ async function selectionSort(elem){
     }
     clearcompare(n,'#75D701');
     elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
 }
-async function selectmin(ind,n,curr,minIdx){
-    for(let i=ind;i<n;i++){
-        let a = document.querySelector("#bar"+i);
-        if(i==minIdx){
-            a.style.background = '#CC8899';
-        }else if(i==curr){
-            a.style.background = '#FCA311';
-        } else {
-            a.style.background = 'rgb(201, 201, 201)';
+async function partition(low,high){
+    let pivot = randomArray[high]; 
+    let i = (low - 1);
+    await setSorted(high,'#CC8899');
+    await await new Promise(resolve => setTimeout(resolve, speed));
+    for (let j = low; j <= high - 1; j++) 
+    { 
+        if (randomArray[j] < pivot) 
+        { 
+            i++; 
+            await myswap(i, j); 
         }
     }
-    await new Promise(resolve => setTimeout(resolve, speed));
+    await myswap(i + 1, high); 
+    return (i + 1); 
+}
+async function quickSortUtil(low,high,n){
+    while (low < high)
+    {
+        let pi = await partition(low, high);
+        await clearcompare(n,'rgb(201, 201, 201)');
+        if (pi - low < high - pi)
+        {
+            await quickSortUtil(low, pi - 1, n);
+            low = pi + 1;
+        }
+        else
+        {
+            await quickSortUtil(pi + 1, high, n);
+            high = pi - 1;
+        }
+    }
+}
+async function quickSort(elem){
+    isSorting = true;
+    elem.setAttribute('onclick','');
+    let n = arraySize;
+    await quickSortUtil(0,n-1,n);
+    clearcompare(n,'#75D701');
+    elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
 }
 async function bubbleSort(elem){
+    isSorting = true;
     elem.setAttribute('onclick','');
     let n = arraySize;
     for(let i = 0 ; i < n - 1 ; ++i) {
@@ -91,8 +126,10 @@ async function bubbleSort(elem){
     }
     clearcompare(n,'#75D701');
     elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
 }
 async function insertionSort(elem){
+    isSorting = true;
     elem.setAttribute('onclick','');
     let n = arraySize;
     for(let i = 1 ; i < n ; i++) {
@@ -108,6 +145,7 @@ async function insertionSort(elem){
     }
     clearcompare(n,'#75D701');
     elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
 }
 async function setKey(i,data){
     randomArray[i]=data;
@@ -122,6 +160,20 @@ async function setInsertion(j){
     randomArray[j+1] = randomArray[j];
     a.style.background = '#FCA311';
     b.style.height = randomArray[j]+"px";
+    await new Promise(resolve => setTimeout(resolve, speed));
+}
+
+async function selectmin(ind,n,curr,minIdx){
+    for(let i=ind;i<n;i++){
+        let a = document.querySelector("#bar"+i);
+        if(i==minIdx){
+            a.style.background = '#CC8899';
+        }else if(i==curr){
+            a.style.background = '#FCA311';
+        } else {
+            a.style.background = 'rgb(201, 201, 201)';
+        }
+    }
     await new Promise(resolve => setTimeout(resolve, speed));
 }
 async function setSorted(i,color){
