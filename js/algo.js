@@ -38,9 +38,81 @@ function beginSorting(elem){
                                 break;
         case 'Selection Sort': selectionSort(elem);
                                 break;
-        default : quickSort(elem);
-                 break;
+        case 'Quick Sort' : quickSort(elem);
+                            break;
+        case 'Merge Sort' : mergeSort(elem);
+                            break;
     }
+}
+async function merge(l, m, r)
+{
+    await clearcompare(r+1,'#FCA311',l);
+    var n1 = m - l + 1;
+    var n2 = r - m;
+    var L = new Array(n1); 
+    var R = new Array(n2);
+    for (var i = 0; i < n1; i++)
+        L[i] = randomArray[l + i];
+    for (var j = 0; j < n2; j++)
+        R[j] = randomArray[m + 1 + j];
+    var i = 0;
+    var j = 0;
+    var k = l;
+    while (i < n1 && j < n2) {
+        let a = document.querySelector('#bar'+k);
+        if (L[i] <= R[j]) {
+            a.style.background = '#42BBFF';
+            a.style.height = L[i]+'px';
+            randomArray[k] = L[i];
+            i++;
+            await new Promise(resolve => setTimeout(resolve, speed));
+        }
+        else {
+            a.style.background = '#42BBFF';
+            a.style.height = R[j]+'px';
+            randomArray[k] = R[j];
+            j++;
+            await new Promise(resolve => setTimeout(resolve, speed));
+        }
+        k++;
+    }
+    while (i < n1) {
+        let a = document.querySelector('#bar'+k);
+        a.style.background = '#42BBFF';
+        a.style.height = L[i]+'px';
+        randomArray[k] = L[i];
+        i++;
+        k++;
+        await new Promise(resolve => setTimeout(resolve, speed));
+    }
+    while (j < n2) {
+        let a = document.querySelector('#bar'+k);
+        a.style.background = '#42BBFF';
+        a.style.height = R[j]+'px';
+        randomArray[k] = R[j];
+        j++;
+        k++;
+        await new Promise(resolve => setTimeout(resolve, speed));
+    }
+    await clearcompare(r+1,'#75D701',l);
+}
+async function mergeSortUtil(l,r,n){
+    if(l>=r){
+        return;
+    } 
+    var m =l+ parseInt((r-l)/2);
+    await mergeSortUtil(l,m,n);
+    await mergeSortUtil(m+1,r,n);
+    await merge(l,m,r);
+}
+async function mergeSort(elem){
+    isSorting = true;
+    elem.setAttribute('onclick','');
+    let n = arraySize;
+    await mergeSortUtil(0,n-1,n);
+    clearcompare(n,'#75D701');
+    elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
 }
 async function selectionSort(elem){
     isSorting = true;

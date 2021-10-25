@@ -5,6 +5,7 @@
     margin: 10px 5vw;
     border-radius: 10px;
     display: flex;
+    overflow-x: auto;
 }
 #speedDiv{
     display: flex;
@@ -13,6 +14,7 @@
     margin: 0px 2px;
     border-radius: 0px 0px 20px 20px;
     background: rgb(201, 201, 201);
+    min-width: 1px;
 }
 .round-button{
     position: absolute;
@@ -20,7 +22,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 10px;
-    background: greenyellow;
+    background: #1A94DA;
     padding: 20px;
     border-radius: 50%;
     color: rgb(240, 248, 255);
@@ -44,9 +46,8 @@
     width: auto;
     flex: 50%;
     margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: aliceblue;
+    overflow-x: scroll;
 }
 .details-div{
     border-radius: 20px;
@@ -60,16 +61,8 @@
     justify-content: center;
     align-items: center;
 }
-.code-div{
-    font-family: monospace;
-    color: aliceblue;
-}
 @media screen and (max-width: 768px){
     .data-div{
         flex-direction: column;
-    }
-    .code-div{
-        overflow-x: auto;
-        display: block;
     }
 }
