@@ -22,7 +22,7 @@ function setArray(){
 }
 function changeSpeed(elem){
     speed = 1100 - Number(elem.value);
-    document.querySelector('#speed').innerHTML=elem.value;
+    document.querySelector('#speedp').innerHTML=elem.value;
 }
 function beginSorting(elem){
     if(isSorting) return;
