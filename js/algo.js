@@ -16,6 +16,9 @@ function setArray(){
         bar.style.width = "calc(90vw/"+ arraySize +" - 4px)";
         mainDiv.appendChild(bar);
     }
+    let p = document.createElement('p');
+    p.setAttribute('id','instruction');
+    mainDiv.appendChild(p);
 }
 function changeSpeed(elem){
     speed = 1100 - Number(elem.value);
@@ -42,7 +45,119 @@ function beginSorting(elem){
                             break;
         case 'Merge Sort' : mergeSort(elem);
                             break;
+        case 'Shell Sort' : shellSort(elem);
+                            break;
+        case 'Heap Sort' : heapSort(elem);
+                            break;
+        case 'Counting Sort' : countingSort(elem);
+                            break;
     }
+}
+async function countingSort(elem){
+    isSorting = true;
+    elem.setAttribute('onclick','');
+    let p = document.querySelector('#instruction');
+    p.style.display = 'block';
+    let n = arraySize;
+    let output = Array.from({length: n}, (_, i) => 0);
+    let count = Array.from({length: 501}, (_, i) => 0);
+    for (let i = 0; i < n; ++i)
+        ++count[randomArray[i]];
+    for (let i = 1; i <= 500; ++i){
+        count[i] += count[i - 1];
+    }
+    for (let i = n - 1; i >= 0; i--) {
+        output[count[randomArray[i]] - 1] = randomArray[i];
+        --count[randomArray[i]];
+    }
+    let flg=0;
+    for (let i = 0; i < n; ++i)
+    {
+        while(flg<=output[i]){
+            p.innerHTML = "Counting: "+flg;
+            await new Promise(resolve => setTimeout(resolve, speed));
+            flg++;
+        }
+        await setKey(i,output[i]);
+    }
+    p.innerHTML = "";
+    p.style.display = "none";
+    await clearcompare(n,'#75D701');
+    elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
+}
+async function heapify(n, i, p)
+{
+    var largest = i; 
+    var l = 2 * i + 1;
+    var r = 2 * i + 2;
+    if (l < n && randomArray[l] > randomArray[largest])
+        largest = l;
+    if (r < n && randomArray[r] > randomArray[largest])
+        largest = r;
+    if (largest != i) {
+        p.innerHTML = "Swapping";
+        await myswap(i,largest);
+        p.innerHTML = "Heapify";
+        await new Promise(resolve => setTimeout(resolve, speed));
+        await clearcompare(n,'rgb(201, 201, 201)');
+        await heapify(n, largest, p);
+    }
+}
+async function heapSort(elem){
+    isSorting = true;
+    elem.setAttribute('onclick','');
+    let p = document.querySelector('#instruction');
+    let n = arraySize;
+    p.style.display = "block";
+    p.innerHTML = "Heapify";
+    await new Promise(resolve => setTimeout(resolve, speed));
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--)
+        await heapify(n, i, p);
+
+    for (let i = n - 1; i > 0; i--) {
+        p.innerHTML = "Swapping";
+        await myswap(0,i);
+        p.innerHTML = "Heapify";
+        await new Promise(resolve => setTimeout(resolve, speed));
+        await clearcompare(i+1,'rgb(201, 201, 201)');
+        await heapify(i, 0, p);
+        setSorted(i,'#75D701')
+    }
+    await clearcompare(n,'#75D701');
+    p.innerHTML = "";
+    p.style.display="none";
+    elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
+}
+async function shellSort(elem){
+    isSorting = true;
+    elem.setAttribute('onclick','');
+    let p = document.querySelector('#instruction');
+    let n = arraySize;
+    p.style.display = "block";
+    for (let gap = Math.floor(n/2); gap > 0; gap = Math.floor(gap/2))
+    {
+        p.innerHTML = "Gap: "+gap;
+        for (let i = gap; i < n; i += 1)
+        {
+            let temp = randomArray[i];
+            let j;
+            await setSorted(i,'#42BBFF');
+            for (j = i; j >= gap && randomArray[j - gap] > temp; j -= gap){
+                randomArray[j] = randomArray[j - gap];
+                await setInsertion(j-gap,j);
+            }
+            randomArray[j] = temp;
+            await setKey(j,temp);
+            await clearcompare(n,'rgb(201, 201, 201)');
+        }
+    }
+    await clearcompare(n,'#75D701');
+    p.innerHTML = "";
+    p.style.display="none";
+    elem.setAttribute('onclick','beginSorting(this)');
+    isSorting = false;
 }
 async function merge(l, m, r)
 {
@@ -110,14 +225,16 @@ async function mergeSort(elem){
     elem.setAttribute('onclick','');
     let n = arraySize;
     await mergeSortUtil(0,n-1,n);
-    clearcompare(n,'#75D701');
+    await clearcompare(n,'#75D701');
     elem.setAttribute('onclick','beginSorting(this)');
     isSorting = false;
 }
 async function selectionSort(elem){
     isSorting = true;
     elem.setAttribute('onclick','');
+    let p = document.querySelector('#instruction');
     let n = arraySize;
+    p.style.display = "block";
     for (let i = 0; i < n-1; i++)
     {
         let min_idx = i;
@@ -126,13 +243,16 @@ async function selectionSort(elem){
             if (randomArray[j] < randomArray[min_idx]){
                 min_idx = j;
             }
-            await selectmin(i,n,j,min_idx);
+            await selectmin(i,n,j,min_idx,p);
         }
+        p.innerHTML = "Minimum Selected Index: "+min_idx;
         await myswap(min_idx, i);
         await setSorted(i,'#75D701');
         await clearcompare(n,'rgb(201, 201, 201)',i+1)
     }
-    clearcompare(n,'#75D701');
+    await clearcompare(n,'#75D701');
+    p.innerHTML = "";
+    p.style.display="none";
     elem.setAttribute('onclick','beginSorting(this)');
     isSorting = false;
 }
@@ -140,7 +260,7 @@ async function partition(low,high){
     let pivot = randomArray[high]; 
     let i = (low - 1);
     await setSorted(high,'#CC8899');
-    await await new Promise(resolve => setTimeout(resolve, speed));
+    await new Promise(resolve => setTimeout(resolve, speed));
     for (let j = low; j <= high - 1; j++) 
     { 
         if (randomArray[j] < pivot) 
@@ -152,19 +272,21 @@ async function partition(low,high){
     await myswap(i + 1, high); 
     return (i + 1); 
 }
-async function quickSortUtil(low,high,n){
+async function quickSortUtil(low,high,n,p){
+
     while (low < high)
     {
         let pi = await partition(low, high);
+        p.innerHTML = "Pivot Position: "+pi;
         await clearcompare(n,'rgb(201, 201, 201)');
         if (pi - low < high - pi)
         {
-            await quickSortUtil(low, pi - 1, n);
+            await quickSortUtil(low, pi - 1, n, p);
             low = pi + 1;
         }
         else
         {
-            await quickSortUtil(pi + 1, high, n);
+            await quickSortUtil(pi + 1, high, n, p);
             high = pi - 1;
         }
     }
@@ -172,9 +294,13 @@ async function quickSortUtil(low,high,n){
 async function quickSort(elem){
     isSorting = true;
     elem.setAttribute('onclick','');
+    let p = document.querySelector('#instruction');
     let n = arraySize;
-    await quickSortUtil(0,n-1,n);
-    clearcompare(n,'#75D701');
+    p.style.display = "block";
+    await quickSortUtil(0,n-1,n,p);
+    await clearcompare(n,'#75D701');
+    p.innerHTML = "";
+    p.style.display="none";
     elem.setAttribute('onclick','beginSorting(this)');
     isSorting = false;
 }
@@ -196,7 +322,7 @@ async function bubbleSort(elem){
         }
         await setSorted(n-1-i,'#75D701');
     }
-    clearcompare(n,'#75D701');
+    await clearcompare(n,'#75D701');
     elem.setAttribute('onclick','beginSorting(this)');
     isSorting = false;
 }
@@ -207,15 +333,15 @@ async function insertionSort(elem){
     for(let i = 1 ; i < n ; i++) {
         let key = randomArray[i];
         let j = i - 1;
-        await setSorted(i,'#42BBFF')
+        await setSorted(i,'#42BBFF');
         while(j >= 0 && randomArray[j] > key) {
-            await setInsertion(j);
+            await setInsertion(j,j+1);
             j -= 1;
         }
         await setKey(j+1,key);
-        clearcompare(n,'rgb(201, 201, 201)');
+        await clearcompare(n,'rgb(201, 201, 201)');
     }
-    clearcompare(n,'#75D701');
+    await clearcompare(n,'#75D701');
     elem.setAttribute('onclick','beginSorting(this)');
     isSorting = false;
 }
@@ -226,20 +352,21 @@ async function setKey(i,data){
     a.style.background = '#75D701';
     await new Promise(resolve => setTimeout(resolve, speed));
 }
-async function setInsertion(j){
+async function setInsertion(j,k){
     let a = document.querySelector("#bar"+j);
-    let b = document.querySelector("#bar"+(j+1));
-    randomArray[j+1] = randomArray[j];
+    let b = document.querySelector("#bar"+k);
+    randomArray[k] = randomArray[j];
     a.style.background = '#FCA311';
     b.style.height = randomArray[j]+"px";
     await new Promise(resolve => setTimeout(resolve, speed));
 }
 
-async function selectmin(ind,n,curr,minIdx){
+async function selectmin(ind,n,curr,minIdx,p){
     for(let i=ind;i<n;i++){
         let a = document.querySelector("#bar"+i);
         if(i==minIdx){
             a.style.background = '#CC8899';
+            p.innerHTML = "Min Index: "+minIdx;
         }else if(i==curr){
             a.style.background = '#FCA311';
         } else {

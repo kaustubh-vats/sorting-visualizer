@@ -39,6 +39,17 @@
     justify-content: center;
     margin: 10px 5vw;
 }
+#instruction{
+    display: none;
+    position: absolute;
+    top: 10;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    color: #1A94DA;
+    font-size: xx-large;
+    text-shadow: 1px 1px black;
+}
 .code-div{
     background-color: #121212;
     padding: 10px 40px;
