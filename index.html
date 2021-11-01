@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,16 +10,18 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="/css/atom-one-dark.min.css">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 </head>
+
 <body>
     <nav id="header" class="helloheader">
         <div class="logo">Sorting Visualizer</div>
         <ul class="nav-links">
             <li class="lis">
                 <div class="algorithms">
-                    <button onclick="showDropDown('algorithms')">Select an Algorithm <i class="fas fa-angle-down"></i></button>
+                    <button onclick="showDropDown('algorithms')">Select an Algorithm 
+                        <i class="fas fa-angle-down"></i></button>
                     <ul class="invisible-links">
                         <li onclick="selectthis(this,'algorithms')">Bubble Sort</li>
                         <li onclick="selectthis(this,'algorithms')">Insertion Sort</li>
@@ -33,7 +36,8 @@
             </li>
             <li class="lis">
                 <div class="array-size">
-                    <button onclick="showDropDown('array-size')">Size of Array <i class="fas fa-angle-down"></i></button>
+                    <button onclick="showDropDown('array-size')">Size of Array <i
+                            class="fas fa-angle-down"></i></button>
                     <ul class="invisible-links">
                         <li onclick="selectthis(this,'array-size')">5</li>
                         <li onclick="selectthis(this,'array-size')">10</li>
@@ -53,13 +57,15 @@
             <div class="line1"></div>
             <div class="line2"></div>
             <div class="line3"></div>
-        </div>   
+        </div>
     </nav>
-    <div class="main-div"> <p id="instruction"></p> </div>
+    <div class="main-div">
+        <p id="instruction"></p>
+    </div>
     <div class="relative-div">
         <span onclick="beginSorting(this)" class="round-button"><i class="fa fa-play fa-2x"></i></span>
     </div>
-    
+
     <div class="data-div">
         <div class="code-div">
             <pre>
@@ -70,7 +76,9 @@
         </div>
         <div class="details-div">
             <div id="speedDiv">
-                <p>Speed: <p id='speedp'>550</p></p>
+                <p>Speed:
+                <p id='speedp'>550</p>
+                </p>
             </div>
             <input onchange="changeSpeed(this)" id="speed" type="range" min="100" max="1000" value="550">
             <h1 id='algoName'>Algo Name</h1>
@@ -82,4 +90,5 @@
     <script type="text/javascript" src="/js/header.js"></script>
     <script type="text/javascript" src="/js/highlight.min.js"></script>
 </body>
+
 </html>
