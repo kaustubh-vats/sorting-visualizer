@@ -53,7 +53,95 @@ function beginSorting(elem) {
             break;
         case 'Cycle Sort': cycleSort(elem);
             break;
+        case 'Cocktail Sort': cocktailSort(elem);
+            break;
+        case 'Radix Sort': radixSort(elem);
+            break;
     }
+}
+async function getMax(n) {
+    let mx = randomArray[0];
+    for (let i = 1; i < n; i++)
+        if (randomArray[i] > mx)
+            mx = randomArray[i];
+    return mx;
+}
+async function countSort(n, exp, p) {
+    let output = new Array(n); 
+    let i;
+    let count = new Array(10);
+    for(let i=0;i<10;i++)
+        count[i]=0;
+    for (i = 0; i < n; i++)
+        count[Math.floor(randomArray[i] / exp) % 10]++;
+    for (i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+    for (i = n - 1; i >= 0; i--) {
+        output[count[Math.floor(randomArray[i] / exp) % 10] - 1] = randomArray[i];
+        count[Math.floor(randomArray[i] / exp) % 10]--;
+    }
+    let flg = 0;
+    for (let i = 0; i < n; ++i) {
+        while (flg <= (output[i]/exp)%10) {
+            p.innerHTML = "For Place " + exp + "s Counting: " + flg;
+            await new Promise(resolve => setTimeout(resolve, speed));
+            flg++;
+        }
+        await setKey(i, output[i], '#42BBFF');
+    }
+}
+async function radixSort(elem) {
+    isSorting = true;
+    elem.setAttribute('onclick', '');
+    let p = document.querySelector('#instruction');
+    p.style.display = 'block';
+    let n = arraySize;
+    let m = await getMax(n);
+    for (let exp = 1; Math.floor(m / exp) > 0; exp *= 10)
+        await countSort(n, exp, p);
+
+    p.innerHTML = "";
+    p.style.display = "none";
+    await clearcompare(n, '#75D701');
+    elem.setAttribute('onclick', 'beginSorting(this)');
+    isSorting = false;
+}
+async function cocktailSort(elem) {
+    isSorting = true;
+    elem.setAttribute('onclick', '');
+    let n = arraySize;
+
+    let swapped = true;
+    let start = 0;
+    let end = n;
+    while (swapped == true) {
+        swapped = false;
+        for (let i = start; i < end - 1; ++i) {
+            await clearcompare(end, 'rgb(201, 201, 201)', start);
+            if (randomArray[i] > randomArray[i + 1]) {
+                await myswap(i, i+1);
+                swapped = true;
+            }
+        }
+        await setSorted(end-1, '#75D701');
+        if (swapped == false)
+            break;
+        swapped = false;
+        end = end - 1;
+        for (let i = end - 1; i >= start; i--) {
+            await clearcompare(end, 'rgb(201, 201, 201)', start);
+            if (randomArray[i] > randomArray[i + 1]) {
+                await myswap(i, i+1);
+                swapped = true;
+            }
+        }
+        await setSorted(start, '#75D701');
+        start++;
+    }
+
+    await clearcompare(n, '#75D701');
+    elem.setAttribute('onclick', 'beginSorting(this)');
+    isSorting = false;
 }
 async function cycleSort(elem) {
     isSorting = true;
@@ -405,11 +493,11 @@ async function insertionSort(elem) {
     elem.setAttribute('onclick', 'beginSorting(this)');
     isSorting = false;
 }
-async function setKey(i, data) {
+async function setKey(i, data, color = '#75D701') {
     randomArray[i] = data;
     let a = document.querySelector('#bar' + i);
     a.style.height = data + "px";
-    a.style.background = '#75D701';
+    a.style.background = color;
     await new Promise(resolve => setTimeout(resolve, speed));
 }
 async function setInsertion(j, k) {

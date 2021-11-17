@@ -68,11 +68,14 @@ nav{
     position: absolute;
     margin-top: 10px;
     width: 200px;
-    height: 250px;
+    height: 280px;
     list-style: none;
     background-color: #030031;
     border-radius: 5px;
     overflow: hidden;
+}
+.array-size ul{
+    height: 200px;
 }
 .fas{
     margin-left: 10px;
@@ -82,7 +85,7 @@ nav{
     background: none;
     border: none;
     outline: none;
-    color: #121212;
+    color: #030031;
     background-color: #E2E8F0;
     padding: 10px 20px;
     border-radius: 5px;
@@ -134,12 +137,13 @@ nav{
         margin: 60px 0px;
         padding: 10px 20px;
         z-index: 1;
-        background: #121212;
+        background: #030031;
         display: block;
         width: auto;
         transform: translateX(200%);
         border-radius: 20px;
         overflow-x: scroll;
+        overflow-y: auto;
     }
     .lis{
         opacity: 0;
