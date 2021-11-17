@@ -1,7 +1,7 @@
 .main-div{
     height: 500px;
     width: 90vw;
-    background-color: #121212;
+    background-color: #030031;
     margin: 10px 5vw;
     border-radius: 10px;
     display: flex;
@@ -51,7 +51,7 @@
     text-shadow: 1px 1px black;
 }
 .code-div{
-    background-color: #121212;
+    background-color: #030031;
     padding: 10px 40px;
     border-radius: 20px;
     width: auto;
@@ -63,7 +63,7 @@
 .details-div{
     border-radius: 20px;
     margin: 10px;
-    background-color: #121212;
+    background-color: #030031;
     width: auto;
     flex: 50%;
     color: #ffffff;

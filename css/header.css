@@ -4,7 +4,7 @@ body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #252525;
+    background-color: #05004e;
 }
 *{ 
     box-sizing: border-box;
@@ -18,7 +18,7 @@ nav{
     min-height: 8vh;
     min-width: 100vw;
     z-index: 4;
-    background-color: #121212;
+    background-color: #030031;
     color: white;
     position: sticky;
 }
@@ -68,9 +68,9 @@ nav{
     position: absolute;
     margin-top: 10px;
     width: 200px;
-    height: 200px;
+    height: 250px;
     list-style: none;
-    background-color: #121212;
+    background-color: #030031;
     border-radius: 5px;
     overflow: hidden;
 }

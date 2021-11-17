@@ -51,7 +51,79 @@ function beginSorting(elem) {
             break;
         case 'Counting Sort': countingSort(elem);
             break;
+        case 'Cycle Sort': cycleSort(elem);
+            break;
     }
+}
+async function cycleSort(elem) {
+    isSorting = true;
+    elem.setAttribute('onclick', '');
+    let p = document.querySelector('#instruction');
+    p.style.display = 'block';
+    let n = arraySize;
+
+    let writes = 0;
+    for (let cycle_start = 0; cycle_start <= n - 2; cycle_start++)
+    {
+        let pos = cycle_start;
+        let item = randomArray[cycle_start];
+        for (let i = cycle_start + 1; i < n; i++)
+            if (randomArray[i] < item)
+                pos++;
+
+        if (pos == cycle_start)
+            continue;
+
+        while (item == randomArray[pos])
+            pos += 1;
+
+        if (pos != cycle_start)
+        {
+            await cycleSwap(item, pos);
+                
+            let temp =  randomArray[pos];
+            randomArray[pos] = item;
+            item = temp;
+
+            writes++;
+            p.innerHTML = "Writes: "+writes;
+        }
+        while (pos != cycle_start)
+        {
+            pos = cycle_start;
+            for (let i = cycle_start + 1; i < n; i++)
+                if (randomArray[i] < item)
+                    pos += 1;
+            while (item == randomArray[pos])
+                pos += 1;
+            if (item != randomArray[pos]) {
+                await cycleSwap(item, pos);
+                
+                let temp =  randomArray[pos];
+                randomArray[pos] = item;
+                item = temp;
+
+                writes++;
+                p.innerHTML = "Writes: "+writes;
+            }
+        }
+    }
+
+    p.innerHTML = "";
+    p.style.display = "none";
+    await clearcompare(n, '#75D701');
+    elem.setAttribute('onclick', 'beginSorting(this)');
+    isSorting = false;
+}
+async function cycleSwap(item, pos){
+    let a = document.querySelector("#bar" + pos);
+    a.style.background = '#FCA311';
+    await new Promise(resolve => setTimeout(resolve, speed));
+    a.style.height = item + "px";
+    a.style.background = '#42BBFF';
+    await new Promise(resolve => setTimeout(resolve, speed));
+    a.style.background = '#75D701';
+    await new Promise(resolve => setTimeout(resolve, speed));
 }
 async function countingSort(elem) {
     isSorting = true;
