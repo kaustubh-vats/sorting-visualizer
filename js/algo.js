@@ -118,7 +118,7 @@ async function cocktailSort(elem) {
         swapped = false;
         for (let i = start; i < end - 1; ++i) {
             await clearcompare(end, 'rgb(201, 201, 201)', start);
-            if (randomArray[i] > randomArray[i + 1]) {
+            if (await mycompare(i,i+1)) {
                 await myswap(i, i+1);
                 swapped = true;
             }
@@ -130,9 +130,12 @@ async function cocktailSort(elem) {
         end = end - 1;
         for (let i = end - 1; i >= start; i--) {
             await clearcompare(end, 'rgb(201, 201, 201)', start);
-            if (randomArray[i] > randomArray[i + 1]) {
+            if (await mycompare(i, i+1)) {
                 await myswap(i, i+1);
                 swapped = true;
+            }
+            if(i==end-1){
+                await setSorted(end, '#75D701');
             }
         }
         await setSorted(start, '#75D701');
