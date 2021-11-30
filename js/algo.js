@@ -57,7 +57,29 @@ function beginSorting(elem) {
             break;
         case 'Radix Sort': radixSort(elem);
             break;
+        case 'Gnome Sort': gnomeSort(elem);
+            break;
     }
+}
+async function gnomeSort(elem) {
+    isSorting = true;
+    elem.setAttribute('onclick', '');
+    let n = arraySize;
+    let index = 0;
+    while (index < n) {
+        if (index == 0)
+            index++;
+        if (randomArray[index] >= randomArray[index - 1])
+            index++;
+        else {
+            await myswap(index, index - 1);
+            await clearcompare(n, 'rgb(201, 201, 201)');
+            index--;
+        }
+    }
+    await clearcompare(n, '#75D701');
+    elem.setAttribute('onclick', 'beginSorting(this)');
+    isSorting = false;
 }
 async function getMax(n) {
     let mx = randomArray[0];
