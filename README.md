@@ -1,4 +1,4 @@
-![GIF IMAGE](https://raw.githubusercontent.com/kaustubh-vats/sorting-visualizer/main/screenshots/1.gif)
+<img src="https://raw.githubusercontent.com/kaustubh-vats/sorting-visualizer/main/screenshots/1.gif" alt="GIF Image" width="100%">
 # Sorting Visualizer
 To demonstrate the working of different types of sorting
 <br />
