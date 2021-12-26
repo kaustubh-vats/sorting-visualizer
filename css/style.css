@@ -73,8 +73,50 @@
     justify-content: center;
     align-items: center;
 }
+footer{
+    background-color: #030031;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+.footer-name{
+    text-decoration: none;
+    color: #ffffff;
+}
+.github-link{
+    text-decoration: none;
+    color: #ffffff;
+}
+.footer-name:hover{
+    text-decoration: underline;
+    color: #1A94DA;
+}
+.github-link:hover{
+    text-decoration: underline;
+    color: #1A94DA;
+}
+.fa-heart{
+    color: #1A94DA;
+    transition: 2s;
+    animation: heartBeat 2s ease-in-out infinite;
+}
 @media screen and (max-width: 768px){
     .data-div{
         flex-direction: column;
+    }
+}
+@keyframes heartBeat{
+    0%{
+        font-size: 15px;
+    }
+    50%{
+        font-size: 19px;
+    }
+    100%{
+        font-size: 15px;
     }
 }
