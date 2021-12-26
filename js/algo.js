@@ -63,6 +63,10 @@ function setArray() {
 function changeSpeed(elem) {
     speed = 1100 - Number(elem.value);
     document.querySelector('#speedp').innerHTML = elem.value;
+    var bar = document.querySelectorAll('.bar');
+    for (let i = 0; i < bar.length; i++) {
+        bar[i].style.transitionDuration = speed + "ms";
+    }
 }
 function beginSorting(elem) {
     if (isSorting) return;
