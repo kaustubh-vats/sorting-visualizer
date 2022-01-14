@@ -15,7 +15,6 @@
     border-radius: 0px 0px 20px 20px;
     background: rgb(201, 201, 201);
     min-width: 1px;
-    transition: 550ms;
 }
 .round-button{
     position: absolute;
